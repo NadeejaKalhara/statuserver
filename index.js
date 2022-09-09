@@ -15,10 +15,13 @@ app.get('*', function(req, res){
   //request('https://aduruthuma.instatus.com'+req.url, function (error, response, body) {
  // console.error('error:', error); // Print the error if one occurred
  // res.status(200).send(body)
+try {
   var x = request('http://aduruthuma.instatus.com'+req.url)
-req.pipe(x)
-x.pipe(res)
-console.log(x,res.body)
+  req.pipe(x)
+  x.pipe(res)
+} catch (error) {
+  res.send(error)
+}
 })
 
 app.listen(port, () => {
