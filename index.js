@@ -18,6 +18,7 @@ app.get('*', function(req, res){
 try {
   var x = request('http://aduruthuma.instatus.com'+req.url)
   req.pipe(x)
+  
   x.pipe(res)
 } catch (error) {
   res.send(error)
@@ -28,5 +29,12 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+module.exports = () => {
+  process.on('uncaughtException', (err) => {
+    console.log(err.message)
+  });
 
-
+  process.on('unhandledRejection', (err) => {
+console.log(err)
+  });
+};
